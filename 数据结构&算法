@@ -1,1 +1,171 @@
+链表（残缺）
+#include <stdio.h>
+#include <malloc.h>
+#include <stdlib.h>
 
+typedef int aa;
+typedef struct  oo
+{
+	aa data;
+	struct oo *next;
+	
+}listnode,*listlist;
+void initlist(listlist *head)
+{	
+	if((*head=(listlist)malloc(sizeof(listnode)))==NULL)
+		exit(-1);
+	(*head)->next=NULL;
+
+}
+int listempty(listlist head)
+{
+	if(head->next==NULL)
+	return 1;
+	else
+		return 0;
+	
+}
+listnode *get(listlist head,int i)
+{
+	listnode *p;
+	p=head;
+	int j=0;
+	if(listempty(head)==1)
+		return NULL;
+	if (i<1)
+		return NULL;
+	while(p->next!=NULL&&j<i)
+	{
+		p=p->next;
+		j++;
+	}
+	if(j==i)
+		return p;
+	else
+		return NULL;
+
+}
+listnode *localnum(listlist head,aa e)
+{
+listnode *p;
+p=head;
+while(p)
+{
+	if(p->data!=e)
+	 p=p->next;
+	else
+		break;
+
+}
+	return p;
+
+}
+int localpos(listlist head,aa e)
+{
+	listnode *p;
+
+	int i;
+	if(listempty(head))
+		return 0;
+	p=head->next;
+	i=1;
+	while(p)
+	{
+		if(p->data==e)
+			return i;
+		else
+			{
+				p=p->next;
+				++i;
+			}
+
+	}
+	if(!p)
+	{
+		return 0;
+	}
+}
+int insertlist(listlist head,int i,aa e)
+{
+	listnode *p,*pre;
+	int j;
+	pre=head;
+	j=0;
+	while(pre->next!=NULL&&j<i-1)
+	{
+		pre=pre->next;
+		j++;
+	}
+	if(j!=i-1)
+		{
+			printf("sdfsdf\n");
+			return 0;
+		}
+		if((p=(listnode*)malloc(sizeof(listnode)))==NULL)
+			exit(-1);
+		p->data=e;
+		p->next=pre->next;
+		pre->next=p;
+		return 1;
+}
+
+
+int listlength(listlist head)
+{	
+	int count =0;
+	listlist p;
+	p=head;
+	while(p->next!=NULL)
+	{
+		p=p->next;
+		count++;
+	}
+	return count;
+}
+
+
+
+int main(int argc, char const *argv[])
+{
+	int i;
+	aa a[]={4,5,1,9};
+	listlist qq;
+	listnode *p;
+	initlist (&qq);
+	for (int i = 1; i <= sizeof(a)/sizeof(a[0]); ++i)
+	{
+		/* code */
+		if(insertlist(qq,i,a[i-1])==0)
+		{
+			printf(" wrong\n");
+	
+		}
+
+	}
+	puts("how many number");
+	for (int i = 1; i <=listlength(qq); i++)
+	{
+		
+		p=get(qq,i);
+		if(p)
+		printf("%4d",p->data);/* code */
+	}
+   
+}
+
+int del (listlist node)
+{
+	listlist *p;
+	p=node;
+	p=p->next;
+	while(p->next!=NULL)
+	{
+		p->data=p->next->data;
+		if(p->next->next==NULL)
+			break;
+		p=p->next;
+	}
+	struct  ListNode *x=p->next;
+	p->next =NULL;
+	free(x);
+	}
